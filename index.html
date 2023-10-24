@@ -1,0 +1,720 @@
+<!DOCTYPE HTML>
+<html lang="en" class="isPWA">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    <title>BSC Sunrise</title>
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/highlights/yellow.css">
+    <link rel="stylesheet" type="text/css" href="fonts/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@500;600;700&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+          rel="stylesheet">
+    <meta id="theme-check" name="theme-color" content="#FFFFFF">
+<body class="theme-dark" style="" data-highlight="highlight-yellow">
+<div id="page" data-swup="0" style="display: block;">
+    <div id="preloader" v-if="loading">
+        <div class="spinner-border color-highlight" role="status"></div>
+    </div>
+    <div class="page-content footer-clear">
+        <h1 class="text-center w-100 color-black mb-2" style="position: inherit !important; z-index: 1">BSC Sunrise</h1>
+        <div v-if="selectedAccount != null" class="card card-style gradient-night shadow-bg mt-2 mb-0 shadow-bg-s">
+            <div class="content">
+                    <span class="d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <h5 class="color-white font-600 mb-0 mt-0 pt-1">
+                                Selected Wallet
+                            </h5>
+                            <h4 class="color-white font-700 mb-0 mt-0 pt-1">
+                                {{tea(selectedAccount)}}
+                            </h4>
+                        </div>
+
+                    </span>
+            </div>
+        </div>
+
+
+        <svg id="header-deco" viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg"
+             class="transition duration-300 ease-in-out delay-150">
+            <path id="header-deco-1"
+                  d="M 0,600 C 0,600 0,120 0,120 C 92.36363636363635,133.79904306220095 184.7272727272727,147.59808612440193 287,148 C 389.2727272727273,148.40191387559807 501.4545454545455,135.40669856459328 592,129 C 682.5454545454545,122.5933014354067 751.4545454545455,122.77511961722489 848,115 C 944.5454545454545,107.22488038277511 1068.7272727272727,91.49282296650718 1172,91 C 1275.2727272727273,90.50717703349282 1357.6363636363635,105.25358851674642 1440,120 C 1440,120 1440,600 1440,600 Z"></path>
+            <path id="header-deco-2"
+                  d="M 0,600 C 0,600 0,240 0,240 C 98.97607655502392,258.2105263157895 197.95215311004785,276.4210526315789 278,282 C 358.04784688995215,287.5789473684211 419.16746411483257,280.5263157894737 524,265 C 628.8325358851674,249.4736842105263 777.377990430622,225.47368421052633 888,211 C 998.622009569378,196.52631578947367 1071.3205741626793,191.57894736842107 1157,198 C 1242.6794258373207,204.42105263157893 1341.3397129186603,222.21052631578948 1440,240 C 1440,240 1440,600 1440,600 Z"></path>
+            <path id="header-deco-3"
+                  d="M 0,600 C 0,600 0,360 0,360 C 65.43540669856458,339.55023923444975 130.87081339712915,319.1004784688995 245,321 C 359.12918660287085,322.8995215311005 521.9521531100479,347.1483253588517 616,352 C 710.0478468899521,356.8516746411483 735.3205741626795,342.3062200956938 822,333 C 908.6794258373205,323.6937799043062 1056.7655502392345,319.62679425837325 1170,325 C 1283.2344497607655,330.37320574162675 1361.6172248803828,345.1866028708134 1440,360 C 1440,360 1440,600 1440,600 Z"></path>
+            <path id="header-deco-4"
+                  d="M 0,600 C 0,600 0,480 0,480 C 70.90909090909093,494.91866028708137 141.81818181818187,509.8373205741627 239,499 C 336.18181818181813,488.1626794258373 459.6363636363636,451.5693779904306 567,446 C 674.3636363636364,440.4306220095694 765.6363636363636,465.88516746411483 862,465 C 958.3636363636364,464.11483253588517 1059.8181818181818,436.8899521531101 1157,435 C 1254.1818181818182,433.1100478468899 1347.090909090909,456.555023923445 1440,480 C 1440,480 1440,600 1440,600 Z"></path>
+        </svg>
+
+
+        <!--    connect wallet    -->
+        <div v-if="selectedAccount == null" class="card card-style m-0 bg-9 shadow-card shadow-card-m"
+             style="height: 200px;margin: 29px 6px !important">
+
+            <strong class="card-top  font-12 p-3 color-white font-monospace">
+                <span @click="connect" class="icon center-button rounded-s me-2 gradient-green shadow-bg shadow-bg-s"
+                      style="background-image: none; background-color: #65c86587 !important;">
+                    <i class="bi bi-wallet2 color-white"></i>
+                    <span>
+                        Connect Wallet
+                    </span>
+                </span>
+            </strong>
+
+            <div class="card-overlay bg-black opacity-50"></div>
+        </div>
+
+        <!-- Register Section -->
+        <div v-if="!isRegistered && selectedAccount != null" class="card card-style m-0 bg-9 shadow-card shadow-card-m"
+             style="height: 200px;margin: 29px 6px !important">
+            <div class="progressive" v-if="waitingForTransactionRegister">
+                <div class="spinner-border color-highlight" role="status"></div>
+            </div>
+            <div class="card-center p-1">
+                <div style="display: flex">
+                    <div class="bg-theme px-3 py-2 rounded-end d-flex" style="flex: 1">
+                        <h1 class="font-13 my-n1">
+                            <span class="color-theme" data-bs-toggle="collapse"
+                                  aria-controls="balance1">Select A Plan</span>
+                        </h1>
+                    </div>
+                    <select v-model="selectedLevel" class="form-control form-select fw-bold font-13 d-flex"
+                            style="flex: 2; width: inherit">
+                        <option value="1">Plan 1: $20-Max Balance: 25</option>
+                        <option value="2">Plan 2: $60-Max Balance: 75</option>
+                        <option value="3">Plan 3: $100-Max Balance: 125</option>
+                        <option value="4">Plan 4: $200-Max Balance: 250</option>
+                    </select>
+                </div>
+                <input type="text" v-model="registerUplineAddress" class="font-15 form-control text-center mt-2"
+                       v-if="canShowRegisterButton">
+
+            </div>
+
+
+            <strong class="card-top no-click font-12 p-3 color-highlight font-monospace">
+                You Are Not Registered!
+            </strong>
+
+            <strong v-if="canShowRegisterButton"
+                    class="card-bottom no-click p-3 font-12 text-start color-green-light font-monospace">
+                <i class="bi bi-check-circle-fill"></i> Allowance is OK for ${{levels[selectedLevel].price}}
+            </strong>
+            <strong v-else class="card-bottom no-click p-3 font-12 text-start color-highlight font-monospace">
+                Approve transfer ${{levels[selectedLevel].price}}
+            </strong>
+
+
+            <strong v-if="!canShowRegisterButton" style="padding: 8px 0px !important;"
+                    class="card-bottom p-3 font-12 text-end color-white font-monospace">
+                <span @click="approveUsdt" role="button" class="icon rounded-s me-2 gradient-blue shadow-bg shadow-bg-s"
+                      style="width: 120px">
+                    <i class="bi bi-check-circle-fill color-white"></i>
+                    <span class="text-white">
+                        &nbsp;Approve
+                    </span>
+                </span>
+            </strong>
+
+            <strong v-if="canShowRegisterButton" style="padding: 8px 0px !important;"
+                    class="card-bottom p-3 font-12 text-end color-white font-monospace">
+                <span @click="registerUser" role="button"
+                      class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s" style="width: 120px">
+                    <i class="bi bi-check-circle-fill color-white"></i>
+                    <span class="text-white">
+                        &nbsp;Register
+                    </span>
+                </span>
+            </strong>
+
+
+            <div class="card-overlay bg-black opacity-50"></div>
+        </div>
+        <!-- registered -->
+        <div v-if="isRegistered" class="card card-style m-0 bg-9 shadow-card shadow-card-m"
+             style="height: 200px;margin: 29px 6px !important">
+            <div class="card-center">
+                <!-- can share link -->
+                <div style="display: flex" v-if="D1 == '-' || D2 == '-'">
+                    <div class="bg-theme px-3 py-2 rounded-end d-inline-block" style="flex: 4">
+                        <h1 class="font-13 my-n1">
+                            <span class="color-theme">Referral Link </span>
+                        </h1>
+                    </div>
+                    <input v-model="referralLink" type="text" readonly class="form-control" style="flex: 7">
+                </div>
+                <!-- can  not share link -->
+                <div style="display: flex" v-else>
+                    <div class="bg-theme px-3 py-2 rounded-end d-inline-block" style="flex: 4">
+                        <h1 class="font-18 my-n1">
+                            <span class="color-theme">All Time Profit</span>
+                        </h1>
+                    </div>
+                    <div class="color-green-dark text-center fw-bold font-50" style="flex: 7;align-self: center;">
+                        ${{digitGroup(myAllTimeProfit * 1e-18)}}
+                    </div>
+                </div>
+            </div>
+            <strong class="card-top no-click font-12 p-3 color-green-dark font-monospace">
+                <i class="font-18 color-green-dark bi bi-check-circle-fill"></i>
+                You are Registered
+            </strong>
+            <strong @click="copyReferral" v-if="D1 == '-' || D2 == '-'"
+                    class="card-bottom   p-3 font-12 text-start color-blue-dark font-monospace">
+                <i class="bi bi-share-fill"></i>
+                <span>Copy Referral Link</span>
+            </strong>
+            <strong class="card-bottom no-click p-3 font-12 text-end color-white font-monospace">
+            </strong>
+            <div class="card-overlay bg-black opacity-50"></div>
+        </div>
+        <!-- Main Content -->
+        <div v-if="selectedAccount != null">
+            <!-- Buttons -->
+            <div class="content py-2">
+
+                <div class="d-flex text-center">
+                    <div class="me-auto" :class="[!isRegistered?'levels-disabled':'',levelId==1?'':'levels-disabled']">
+                        <span class="icon icon-xxl rounded-m bg-theme shadow-m">
+                            <span class="font-28 color-green-dark bi">
+                                25
+                            </span>
+                        </span>
+                    </div>
+                    <div class="m-auto" :class="[!isRegistered?'levels-disabled':'',levelId==2?'':'levels-disabled']">
+                        <span class="icon icon-xxl rounded-m bg-theme shadow-m">
+                            <span class="font-28  color-green-dark bi">
+                                75
+                            </span>
+                        </span>
+                    </div>
+                    <div class="m-auto" :class="[!isRegistered?'levels-disabled':'',levelId==3?'':'levels-disabled']">
+                        <span class="icon icon-xxl rounded-m bg-theme shadow-m">
+                            <span class="font-28  color-green-dark bi">
+                                125
+                            </span>
+                        </span>
+                    </div>
+                    <div class="ms-auto" :class="[!isRegistered?'levels-disabled':'',levelId==4?'':'levels-disabled']">
+                        <span class="icon icon-xxl rounded-m bg-theme shadow-m">
+                            <span class="font-28  color-green-dark bi">
+                                252
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div v-if="isRegistered" class="card   gradient-night shadow-bg shadow-bg-s mt-3">
+                    <div class="content">
+                        <span class="d-flex">
+                            <div class="align-self-center">
+                                <h1 class="mb-0 font-40">
+                                    <i class="bi bi-pie-chart-fill color-white pe-3"></i>
+                                </h1>
+                            </div>
+                            <div class="align-self-center">
+                                <h5 class="color-white font-700 mb-0 mt-0 pt-1">
+                                The maximum balance you can earn per cycle based on your account level.
+                                </h5>
+                            </div>
+
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- User Data -->
+            <div v-if="isRegistered">
+                <div class="content my-0 mt-n2 px-1">
+                    <div class="d-flex">
+                        <div class="align-self-center">
+                            <h3 class="font-16 mb-2">Personal Data</h3>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card card-style">
+                    <div class="content">
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                                <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"><i
+                                        class="bi bi-cash-coin color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">All Time Profit</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-green-dark">${{pN(myAllTimeProfit * 1e-18)}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-teal shadow-bg shadow-bg-s"><i
+                                class="bi bi-bezier color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">All Time Balances</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-teal-dark">{{ myAllTimeParity }}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-blue shadow-bg shadow-bg-s"><i
+                                class="bi bi-check2-circle color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Today Balance</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-blue-dark">{{cyclePoints}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                                 <span class="icon rounded-s me-2 gradient-brown shadow-bg shadow-bg-s">
+                                     <i class="bi bi-cash-coin color-white"></i>
+                                 </span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Today Profit</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-brown-dark">${{pN(myProfitToday * 1e-18)}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-yellow shadow-bg shadow-bg-s"><i
+                                class="bi bi-currency-dollar color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Withdrawable Profit</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-yellow-dark">${{pN(myWithdrawableProfit * 1e-18)}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span v-if="myWithdrawableProfit > 0" class="d-flex py-1">
+                            <div class="align-self-center" style="width: 100%">
+                                 <span @click="requestWithdrawForMe" style="min-width: 100%;margin-left: 11px;"
+                                       class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s">
+                                     <i class="bi bi-arrow-up-circle-fill color-white"></i><span class="color-white">&nbsp;Withdraw Your Profit</span>
+                                 </span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- User Net Data -->
+            <div v-if="isRegistered">
+                <div class="content my-0 mt-n2 px-1">
+                    <div class="d-flex">
+                        <div class="align-self-center">
+                            <h3 class="font-16 mb-2">Network Data</h3>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card card-style">
+                    <div class="content">
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                                <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"><i
+                                        class="bi bi-box-arrow-in-up color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">UpLine</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-green-dark">${{tea(upLine)}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                                <span class="icon rounded-s me-2 gradient-teal shadow-bg shadow-bg-s">
+                                    <i class="bi bi-box-arrow-in-left color-white"></i>
+                                </span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Left</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-teal-dark">{{ tea(D1) }}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-blue shadow-bg shadow-bg-s"><i
+                                class="bi bi-box-arrow-in-right color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Right</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-blue-dark">{{tea(D2)}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-brown shadow-bg shadow-bg-s"><i
+                                class="bi bi-arrow-return-left color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">AllTime Left Points</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-brown-dark" v-html="leftPoints"></h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-yellow shadow-bg shadow-bg-s"><i
+                                class="bi bi-arrow-return-right color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">AllTime Right Points</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-yellow-dark" v-html="rightPoints"></h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-yellow shadow-bg shadow-bg-s"><i
+                                class="bi bi-archive-fill color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Saved Points Left</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-yellow-dark" v-html="savedPointsLeft"></h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-blue shadow-bg shadow-bg-s"><i
+                                class="bi bi-archive-fill color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Saved Points Right</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-blue-dark" v-html="savedPointsRight"></h4>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- System Data -->
+            <div>
+                <div class="content my-0 mt-n2 px-1">
+                    <div class="d-flex">
+                        <div class="align-self-center">
+                            <h3 class="font-16 mb-2">Sunrise Today's Data</h3>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card card-style">
+                    <div class="content">
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"><i
+                                class="bi bi-people-fill color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Total Users</h5>
+
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-green-dark">{{ totalUsers }}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                            <span class="icon rounded-s me-2 gradient-orange shadow-bg shadow-bg-s">
+                                <i  class="bi bi-archive color-white"></i>
+                            </span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Pool Amount</h5>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-orange-dark">${{ pN(todayPoolAmount) }}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-mint shadow-bg shadow-bg-s"><i
+                                class="bi bi-stack color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Today Total Balances</h5>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-mint-dark">{{todayTotalParity}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-red shadow-bg shadow-bg-s"><i
+                                class="bi bi-dice-6-fill color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Lottery Pool</h5>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-red-dark">${{ pN(lotteryPool) }}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"><i
+                                class="bi bi-piggy-bank-fill color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Withdraw Pool</h5>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-green-dark">${{ pN(withdrawPool) }}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center" style="width: 100%">
+                                 <span @click="requestWithdrawForAllUsers" style="min-width: 100%;margin-left: 11px;"
+                                       class="icon rounded-s me-2  shadow-bg shadow-bg-s"
+                                       :class="[withdrawPool > 0 && canWithdraw ? 'gradient-green':'gradient-gray']">
+                                     <i class="bi bi-calculator-fill color-white"></i><span class="color-white">&nbsp;Withdraw For All Members</span>
+                                 </span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Lottery -->
+            <div>
+                <div class="content my-0 mt-n2 px-1">
+                    <div class="d-flex">
+                        <div class="align-self-center">
+                            <h3 class="font-16 mb-2">Lottery</h3>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card card-style">
+                    <div class="content">
+                        <div class="progressive" v-if="waitingForTransactionLottery">
+                            <div class="spinner-border color-highlight" role="status"></div>
+                        </div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"><i
+                                class="bi bi-battery-half color-white"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Won So Far</h5>
+                                </p>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-green-dark">${{pN(myAllTimeLotteryWins * 1e-18)}}</h4>
+                            </div>
+
+
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1" v-if="myAllTimeParity == 0">
+                            <div @click="lottery" class="align-self-center" style="width: 100%">
+                                <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"
+                                      style="width: 100%">
+                                    <i class="bi bi-dice-6-fill color-white"></i>
+                                    <span class="text-white">Roll The Dice</span>
+                                </span>
+                            </div>
+                        </span>
+                        <span class="d-flex py-1" v-else>
+                            <div class="align-self-center" style="width: 100%">
+                                <span class="icon rounded-s me-2 gradient-gray shadow-bg shadow-bg-s"
+                                      style="width: 100%">
+                                    <i class="bi bi-dice-6-fill color-white"></i>
+                                    <span class="text-white">Permission Denied</span>
+                                </span>
+                                <div class="color-highlight text-center mt-1">
+                                    You can't participate in lottery anymore!
+                                </div>
+                            </div>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="isRegistered && levelId<4">
+
+                <div class="content my-0 mt-n2 px-1">
+                    <div class="d-flex">
+                        <div class="align-self-center">
+                            <h3 class="font-16 mb-2">Top Up</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-style gradient-green shadow-bg shadow-bg-s">
+                    <div class="content">
+                    <span class="d-flex">
+                        <div class="align-self-center">
+                            <h1 class="mb-0 font-40"><i class="bi bi-check-circle color-white pe-3"></i></h1>
+                        </div>
+                        <div class="align-self-center">
+                            <h5 class="color-white font-700 mb-0 mt-0 pt-1">
+                                Base on your plan, you can <br> get {{levels[levelId].maxPoint}} points(Balances) in each 12 hours.
+                            </h5>
+                        </div>
+
+                    </span>
+                    </div>
+                </div>
+
+
+                <!-- Register Section -->
+                <div class="card card-style m-0 bg-9 shadow-card shadow-card-m"
+                     style="height: 200px;margin: 29px 6px !important">
+                    <div class="progressive" v-if="waitingForTransactionRegister">
+                        <div class="spinner-border color-highlight" role="status"></div>
+                    </div>
+                    <div class="card-center p-1">
+                        <div style="display: flex">
+                            <div class="bg-theme px-3 py-2 rounded-end d-flex" style="flex: 1">
+                                <h1 class="font-13 my-n1">
+                            <span class="color-theme" data-bs-toggle="collapse"
+                                  aria-controls="balance1">Select A Plan</span>
+                                </h1>
+                            </div>
+                            <select v-model="selectedLevel" class="form-control form-select fw-bold font-13 d-flex"
+                                    style="flex: 2; width: inherit">
+                                <option disabled value="2">Plan 1: $20-Max Balance: 25</option>
+                                <option :disabled="levelId > 1" value="2">Plan 2: $60-Max Balance: 75</option>
+                                <option :disabled="levelId > 2" value="3">Plan 3: $100-Max Balance: 125</option>
+                                <option value="4">Plan 4: $200-Max Balance: 250</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <strong class="card-top no-click font-12 p-3 color-highlight font-monospace">
+                        Select a plan to TopUp
+                    </strong>
+
+                    <strong v-if="canShowRegisterButton"
+                            class="card-bottom no-click p-3 font-12 text-start color-green-light font-monospace">
+                        <i class="bi bi-check-circle-fill"></i> Allowance is OK for ${{levels[selectedLevel].price}}
+                    </strong>
+                    <strong v-else class="card-bottom no-click p-3 font-12 text-start color-highlight font-monospace">
+                        Approve transfer ${{levels[selectedLevel].price}}
+                    </strong>
+
+
+                    <strong v-if="!canShowRegisterButton" style="padding: 8px 0px !important;"
+                            class="card-bottom p-3 font-12 text-end color-white font-monospace">
+                <span @click="approveUsdt" role="button" class="icon rounded-s me-2 gradient-blue shadow-bg shadow-bg-s"
+                      style="width: 120px">
+                    <i class="bi bi-check-circle-fill color-white"></i>
+                    <span class="text-white">
+                        &nbsp;Approve
+                    </span>
+                </span>
+                    </strong>
+
+                    <strong v-if="canShowRegisterButton" style="padding: 8px 0px !important;"
+                            class="card-bottom p-3 font-12 text-end color-white font-monospace">
+                        <span @click="levelUp" role="button"
+                              class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s" style="width: 120px">
+                            <i class="bi bi-check-circle-fill color-white"></i>
+                            <span class="text-white">
+                                &nbsp;Top Up
+                            </span>
+                        </span>
+                    </strong>
+                    <div class="card-overlay bg-black opacity-50"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Green Box Notice-->
+        <div v-else class="card card-style gradient-highlight shadow-bg shadow-bg-s">
+            <div class="content">
+                <span class="d-flex">
+                    <div class="align-self-center">
+                        <h1 class="mb-0 font-40"><i class="bi bi-info-circle-fill color-white pe-3"></i></h1>
+                    </div>
+                    <div class="align-self-center">
+                        <h5 class="color-white font-700 mb-0 mt-0 pt-1">
+                            Connect Your wallet to view <br> your BSC Sunrise panel.
+                        </h5>
+                    </div>
+
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="scripts/v.js"></script>
+<script src="scripts/w.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="scripts/a.js"></script>
+
+
+
+</body>
+</html>

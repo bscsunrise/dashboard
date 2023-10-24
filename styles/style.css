@@ -1,0 +1,51 @@
+.progress-circle {
+    position: absolute;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 2s linear infinite;
+    font-size: 25px;
+ }
+
+@-moz-keyframes spin {
+    100% { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform:rotate(360deg);
+    }
+}
+
+.progressive {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #091621e3;
+    border-radius: 21px;
+    align-content: stretch;
+    display: inline-grid;
+    align-items: center;
+    justify-items: center;
+    z-index: 31;
+}
+
+.center-button {
+    width: 100%;
+    margin-top: 57px;
+    font-size: 19px;
+}
+
+input[type=button]:focus, input[type=date]:focus, input[type=email]:focus, input[type=number]:focus, input[type=password]:focus, input[type=submit]:focus, input[type=tel]:focus, input[type=text]:focus, input[type=url]:focus, select:focus, textarea:focus {
+    outline-color: rgba(74,137,220,.25);
+    box-shadow: 0 0 0 0 rgba(74,137,220,.25)!important;
+    background-color: #efefef;
+}
+
+.levels-disabled > span > span {
+    color: #434343 !important;
+}
