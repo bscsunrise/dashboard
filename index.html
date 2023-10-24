@@ -156,7 +156,7 @@
                         </h1>
                     </div>
                     <div class="color-green-dark text-center fw-bold font-50" style="flex: 7;align-self: center;">
-                        ${{digitGroup(myAllTimeProfit * 1e-18)}}
+                        ${{ digitGroup( parseFloat(myAllTimeProfit * 1e-18).toFixed(1)) }}
                     </div>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                     <div class="ms-auto" :class="[!isRegistered?'levels-disabled':'',levelId==4?'':'levels-disabled']">
                         <span class="icon icon-xxl rounded-m bg-theme shadow-m">
                             <span class="font-28  color-green-dark bi">
-                                252
+                                250
                             </span>
                         </span>
                     </div>
@@ -536,13 +536,12 @@
 
 
             <!-- Lottery -->
-            <div>
+            <div v-if="isRegistered">
                 <div class="content my-0 mt-n2 px-1">
                     <div class="d-flex">
                         <div class="align-self-center">
                             <h3 class="font-16 mb-2">Lottery</h3>
                         </div>
-
                     </div>
                 </div>
 
