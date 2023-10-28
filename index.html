@@ -474,7 +474,7 @@
                             </div>
                             <div class="align-self-center ps-1">
                                 <h5 class="pt-1 mb-n1">Pool Amount</h5>
-                            </div>
+                            </div>`
                             <div class="align-self-center ms-auto text-end">
                                 <h4 class="pt-1 mb-n1 color-orange-dark">${{ pN(todayPoolAmount) }}</h4>
                             </div>
@@ -490,6 +490,19 @@
                             </div>
                             <div class="align-self-center ms-auto text-end">
                                 <h4 class="pt-1 mb-n1 color-mint-dark">{{todayTotalParity}}</h4>
+                            </div>
+                        </span>
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                        <span class="icon rounded-s me-2 gradient-highlight shadow-bg shadow-bg-s"><i
+                                class="bi bi-stack color-highlight"></i></span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Today Each Balance value</h5>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-highlight-dark">{{ todayTotalParity > 0 ? pN(todayPoolAmount /  todayTotalParity) ? 0  }}</h4>
                             </div>
                         </span>
                         <div class="divider my-2 opacity-50"></div>
@@ -710,8 +723,5 @@
 <script src="scripts/w.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="scripts/a.js?v=2"></script>
-
-
-
 </body>
 </html>
