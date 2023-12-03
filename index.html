@@ -85,10 +85,10 @@
                     </div>
                     <select v-model="selectedLevel" class="form-control form-select fw-bold font-13 d-flex"
                             style="flex: 2; width: inherit">
-                        <option value="1">Plan 1: $20-Max Balance: 25</option>
-                        <option value="2">Plan 2: $60-Max Balance: 75</option>
-                        <option value="3">Plan 3: $100-Max Balance: 125</option>
-                        <option value="4">Plan 4: $200-Max Balance: 250</option>
+                        <option value="1">Plan 1: $20-Max Daily: $40</option>
+                        <option value="2">Plan 2: $60-Max Daily: $180</option>
+                        <option value="3">Plan 3: $100-Max Daily: $300</option>
+                        <option selected value="4">Plan 4: $200-Max Daily: $1000</option>
                     </select>
                 </div>
                 <input type="text" v-model="registerUplineAddress" class="font-15 form-control text-center mt-2"
@@ -180,28 +180,28 @@
                     <div class="me-auto" :class="[!isRegistered?'levels-disabled':'',levelId==1?'':'levels-disabled']">
                         <span class="icon icon-xxl rounded-m bg-theme shadow-m">
                             <span class="font-28 color-green-dark bi">
-                                25
+                                $40
                             </span>
                         </span>
                     </div>
                     <div class="m-auto" :class="[!isRegistered?'levels-disabled':'',levelId==2?'':'levels-disabled']">
                         <span class="icon icon-xxl rounded-m bg-theme shadow-m">
                             <span class="font-28  color-green-dark bi">
-                                75
+                                $180
                             </span>
                         </span>
                     </div>
                     <div class="m-auto" :class="[!isRegistered?'levels-disabled':'',levelId==3?'':'levels-disabled']">
                         <span class="icon icon-xxl rounded-m bg-theme shadow-m">
                             <span class="font-28  color-green-dark bi">
-                                125
+                                $300
                             </span>
                         </span>
                     </div>
                     <div class="ms-auto" :class="[!isRegistered?'levels-disabled':'',levelId==4?'':'levels-disabled']">
                         <span class="icon icon-xxl rounded-m bg-theme shadow-m">
                             <span class="font-28  color-green-dark bi">
-                                250
+                                $1K
                             </span>
                         </span>
                     </div>
@@ -216,7 +216,7 @@
                             </div>
                             <div class="align-self-center">
                                 <h5 class="color-white font-700 mb-0 mt-0 pt-1">
-                                The maximum balance you can earn per cycle based on your account level.
+                                The maximum withdrawable amount you can earn daily based on your account level.
                                 </h5>
                             </div>
 
@@ -309,12 +309,13 @@
                                 <h4 class="pt-1 mb-n1 color-yellow-dark">${{pN(myWithdrawableProfit * 1e-18)}}</h4>
                             </div>
                         </span>
-                        <div class="divider my-2 opacity-50"></div>
+                        <div v-if="myWithdrawableProfit > 0" class="divider my-2 opacity-50"></div>
                         <span v-if="myWithdrawableProfit > 0" class="d-flex py-1">
                             <div class="align-self-center" style="width: 100%">
                                  <span @click="requestWithdrawForMe" style="min-width: 100%;margin-left: 11px;"
                                        class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s">
-                                     <i class="bi bi-arrow-up-circle-fill color-white"></i><span class="color-white">&nbsp;Withdraw Your Profit</span>
+                                     <i class="bi bi-arrow-up-circle-fill color-white"></i>
+                                     <span class="color-white">&nbsp;Withdraw Your Profit</span>
                                  </span>
                             </div>
                         </span>
@@ -469,16 +470,32 @@
                         <span class="d-flex py-1">
                             <div class="align-self-center">
                             <span class="icon rounded-s me-2 gradient-orange shadow-bg shadow-bg-s">
-                                <i  class="bi bi-archive color-white"></i>
+                                <i class="bi bi-archive color-white"></i>
                             </span>
                             </div>
                             <div class="align-self-center ps-1">
                                 <h5 class="pt-1 mb-n1">Pool Amount</h5>
-                            </div>`
+                            </div>
                             <div class="align-self-center ms-auto text-end">
                                 <h4 class="pt-1 mb-n1 color-orange-dark">${{ pN(todayPoolAmount) }}</h4>
                             </div>
                         </span>
+
+                        <div class="divider my-2 opacity-50"></div>
+                        <span class="d-flex py-1">
+                            <div class="align-self-center">
+                            <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s">
+                                <i class="bi bi-align-top color-white"></i>
+                            </span>
+                            </div>
+                            <div class="align-self-center ps-1">
+                                <h5 class="pt-1 mb-n1">Flash Out for Tomorrow</h5>
+                            </div>
+                            <div class="align-self-center ms-auto text-end">
+                                <h4 class="pt-1 mb-n1 color-green-dark">${{ pN(flashForTomorrow) }}</h4>
+                            </div>
+                        </span>
+
                         <div class="divider my-2 opacity-50"></div>
                         <span class="d-flex py-1">
                             <div class="align-self-center">
@@ -502,7 +519,7 @@
                                 <h5 class="pt-1 mb-n1">Today Each Balance value</h5>
                             </div>
                             <div class="align-self-center ms-auto text-end">
-                                <h4 class="pt-1 mb-n1 color-highlight">{{ todayTotalParity > 0 ? pN(todayPoolAmount /  todayTotalParity) : 0  }}</h4>
+                                <h4 class="pt-1 mb-n1 color-highlight">${{ todayTotalParity > 0 ? pN(todayPoolAmount /  todayTotalParity) : 0  }}</h4>
                             </div>
                         </span>
                         <div class="divider my-2 opacity-50"></div>
@@ -577,7 +594,7 @@
 
                         </span>
                         <div class="divider my-2 opacity-50"></div>
-                        <span class="d-flex py-1" v-if="myAllTimeParity == 0">
+                        <span class="d-flex py-1" v-if="canJoinEver && canJoinNow">
                             <div @click="lottery" class="align-self-center" style="width: 100%">
                                 <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-s"
                                       style="width: 100%">
@@ -586,7 +603,20 @@
                                 </span>
                             </div>
                         </span>
-                        <span class="d-flex py-1" v-else>
+                        <span class="d-flex py-1" v-if="canJoinEver && !canJoinNow">
+                            <div class="align-self-center" style="width: 100%">
+                                <span class="icon rounded-s me-2 gradient-gray shadow-bg shadow-bg-s"
+                                      style="width: 100%">
+                                    <i class="bi bi-dice-6-fill color-white"></i>
+                                    <span class="text-white">Permission Denied</span>
+                                </span>
+                                <div class="color-highlight text-center mt-1">
+                                    You can't join the lottery box until {{parseInt(wait / 86400)}} days
+                                </div>
+                            </div>
+                        </span>
+
+                        <span class="d-flex py-1" v-if="!canJoinEver && !canJoinNow">
                             <div class="align-self-center" style="width: 100%">
                                 <span class="icon rounded-s me-2 gradient-gray shadow-bg shadow-bg-s"
                                       style="width: 100%">
@@ -598,6 +628,7 @@
                                 </div>
                             </div>
                         </span>
+
 
                     </div>
                 </div>
@@ -621,7 +652,7 @@
                         </div>
                         <div class="align-self-center">
                             <h5 class="color-white font-700 mb-0 mt-0 pt-1">
-                                Base on your plan, you can <br> get {{levels[levelId].maxPoint}} points(Balances) in each 12 hours.
+                                Base on your plan, you can <br> get ${{levels[levelId].maxProfit}} maximum Daily.
                             </h5>
                         </div>
 
@@ -646,10 +677,9 @@
                             </div>
                             <select v-model="selectedLevel" class="form-control form-select fw-bold font-13 d-flex"
                                     style="flex: 2; width: inherit">
-                                <option disabled value="2">Plan 1: $20-Max Balance: 25</option>
-                                <option :disabled="levelId > 1" value="2">Plan 2: $60-Max Balance: 75</option>
-                                <option :disabled="levelId > 2" value="3">Plan 3: $100-Max Balance: 125</option>
-                                <option value="4">Plan 4: $200-Max Balance: 250</option>
+                                <option :disabled="levelId > 1" value="2">Plan 2: $60-Max Daily: $180</option>
+                                <option :disabled="levelId > 2" value="3">Plan 3: $100-Max Daily: $400</option>
+                                <option selected value="4">Plan 4: $200-Max Daily: $1000</option>
                             </select>
                         </div>
 
@@ -722,6 +752,6 @@
 <script src="scripts/v.js"></script>
 <script src="scripts/w.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="scripts/a.js?v=2"></script>
+<script src="scripts/a.js?v=3"></script>
 </body>
 </html>
